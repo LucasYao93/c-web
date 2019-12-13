@@ -1,18 +1,5 @@
-#include <sys/socket.h>
-#include <sys/un.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#define PORT 80
-char webpage[] =
-"HTTP/1.1 200 OK\r\n"
-"Content-Type: text/html; charset=UTF-8\r\n\r\n"
-"<!DOCTYPE html>\r\n"
-"<html><head><title>LucasYao</title>\r\n"
-"<style>body {background-color: #FFF000 } </style></head>\r\n"
-"<body><center><h1>Hello,C Web!</h1></center></body>";
+#include "web_core.h"
+#include "web_config.h"
 
 int main(int argc, char *argv[]) {
     int fd_server, fd_client, req_number;
@@ -51,7 +38,7 @@ int main(int argc, char *argv[]) {
         if(fd_client == -1) {
 	    perror("Connection failed...\n");
 	    continue;
-	}
+	    }
 	printf("Client socket fd %d\n", fd_client);
 	memset(buffer, 0, 2048);    
 	read(fd_client, buffer, 2048);
