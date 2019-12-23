@@ -6,7 +6,7 @@ int main(int argc, char *argv[]) {
     struct sockaddr_in server_addr, client_addr;
     socklen_t sin_len = sizeof(client_addr);
     char buffer[2048];
-    
+
     req_number = 0;
     memset(&server_addr, 0, sizeof(server_addr));
 
@@ -46,17 +46,19 @@ int main(int argc, char *argv[]) {
         read(fd_client, buffer, 2048);
         printf("request %d-th\n%s\n", ++req_number, buffer);
 
-        char *webpage = deal_http_request(buffer);
-        int n = write(fd_client, webpage, 2048);
+        http_response_t *http_response = deal_http_request(buffer, http_response);
+        int n = write(fd_client, http_response->message, http_response->message_size);
         printf("return write number %d\n", n);
+        free(http_response);
         close(fd_client);
     }
+    
     close(fd_server);
 
     return 0;
 }
 
-char * deal_http_request(char *message)
+http_response_t * deal_http_request(char *message)
 {
     http_request_t *http_request = (http_request_t *)malloc(sizeof(http_request_t));
     http_response_t *http_response = (http_response_t *)malloc(sizeof(http_response_t));
@@ -87,11 +89,17 @@ char * deal_http_request(char *message)
         {"title":"test","sub":[1,2,3]}
     */
     //生成response
-    http_response->row = "HTTP/1.1 200 OK\r\n";
-    http_response->header = "Content-Type: application/json;charset=UTF-8\r\n\r\n";
+    char row[] = "HTTP/1.1 200 OK\r\n";
+    char header[] = "Content-Type: application/json;charset=UTF-8\r\n\r\n";
+    http_response->row = row;
+    http_response->header = header;
     http_response->body = web_event->data;
-    http_response->combine_reponse_message(http_response);
+    http_response->message_size = sizeof(row) + sizeof(header) + http_response->message_size;
+    http_response->combine_reponse_message(http_response, http_response->message_size);
+   
     //sizeof(http_response->message)代表指针大小，不是存储数据的大小
     //printf("%s\n", http_response->message);
-    return http_response->message;
+    free(http_request);
+    free(web_event);
+    return http_response;
 }

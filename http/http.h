@@ -37,6 +37,7 @@ struct http_response_s {
     char *header;
     char *body;
     char *message;
+    size_t message_size;
     combine_reponsd_message_pt combine_reponse_message;
 };
 

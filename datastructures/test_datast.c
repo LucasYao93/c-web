@@ -10,7 +10,7 @@ int main()
 
     web_array->create_web_array(web_array, 10);
     data_structure->data = web_array->return_jsondata_to_parent(web_array);
-
+    data_structure->data = web_array->data_size;
     printf("json data: %s", data_structure->data);
 
     printf("\n");

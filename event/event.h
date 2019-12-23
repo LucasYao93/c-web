@@ -16,6 +16,7 @@ typedef int (*event_callback_func_pt) (web_event_t *t);
 
 struct web_event_s {
     char *data;
+    size_t data_size;
     event_callback_func_pt event_callback_func;
 };
 

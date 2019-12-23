@@ -13,6 +13,7 @@ typedef void *(* return_datatype_pt)();
 struct data_structure_s
 {
     char *data;
+    size_t data_size;
     return_datatype_pt return_datatype; 
 };
 

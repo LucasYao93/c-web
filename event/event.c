@@ -9,11 +9,13 @@ int callback_array_func(web_event_t *t)
 
     web_array->create_web_array(web_array, 10);
     data_structure->data = web_array->return_jsondata_to_parent(web_array);
+    data_structure->data = web_array->data_size;
 
     //printf("json data: %s", data_structure->data);
 
     //char *msg = "{\"title\":\"test\",\"sub\":[1,2,3]}";
     t->data = data_structure->data;
+    t->data = data_structure->data_size;
     return 0;
 }
 

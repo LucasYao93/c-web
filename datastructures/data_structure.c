@@ -15,6 +15,7 @@ void *return_datatype(char type[])
 int data_structure_init(data_structure_t *t)
 {
     t->data = NULL;
+    t->data_size = 0;
     t->return_datatype = &return_datatype;
     
     return 0;

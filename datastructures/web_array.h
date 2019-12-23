@@ -22,6 +22,7 @@ struct web_array_s
 {
     char *data;
     size_t size;
+    size_t data_size;
     create_web_array_pt create_web_array;
     return_jsondata_to_parent_pt return_jsondata_to_parent;
 

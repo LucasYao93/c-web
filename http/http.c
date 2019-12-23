@@ -100,10 +100,10 @@ static int deal_request_row(http_request_t *t) {
 /**
  *将respond的header，body组合，填充到message.
 */
-static int combine_reponse_message(http_response_t *t) 
+static int combine_reponse_message(http_response_t *t, size_t size) 
 {
-    char message[RESPONSE_MESSAGE_SIZE];
-    t->message = message;
+    
+    t->message = (char *)malloc(sizeof(char) * size);
     strcpy(message, t->row);
     strcat(message, t->header);
     strcat(message, t->body);
@@ -136,6 +136,7 @@ int http_response_structure_init(http_response_t *t)
     t->row = NULL;
     t->header = NULL;
     t->body = NULL;
+    t->message_size = 0;
     t->combine_reponse_message = &combine_reponse_message;
     return 0;
 }
