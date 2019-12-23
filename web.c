@@ -96,9 +96,9 @@ http_response_t *deal_http_request(char *message)
     http_response->row = row;
     http_response->header = header;
     http_response->body = web_event->data;
-    http_response->message_size = sizeof(row) + sizeof(header) + http_response->message_size;
+    //issue:web_event->data_size error
+    http_response->message_size = sizeof(row) + sizeof(header) + web_event->data_size;
     http_response->combine_reponse_message(http_response, http_response->message_size);
-   
     //sizeof(http_response->message)代表指针大小，不是存储数据的大小
     //printf("%s\n", http_response->message);
     free(http_request);

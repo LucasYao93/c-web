@@ -28,7 +28,7 @@ static int create_web_array(web_array_t *t,size_t size)
 
 static char * return_jsondata_to_parent(web_array_t *t)
 {
-    char status[] = "{\"status\": \"success\",";
+    char status[] = "{\"status\":\"success\",";
     char data_header[] = "\"data\":[";
     char *data = (char *)malloc(((2 * t->size)) * sizeof(char));
     char *mv_data = data;
