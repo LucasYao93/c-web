@@ -15,7 +15,7 @@ int callback_array_func(web_event_t *t)
 
     //char *msg = "{\"title\":\"test\",\"sub\":[1,2,3]}";
     t->data = data_structure->data;
-    t->data = data_structure->data_size;
+    t->data_size = data_structure->data_size;
     return 0;
 }
 
