@@ -1,5 +1,7 @@
 #include "http.h"
 
+char *G_HTTP_ROUTE[] ={"//array"};
+
 /**
  *处理请求的message信息，填充到row,header,body.
 */

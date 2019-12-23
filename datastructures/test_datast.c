@@ -6,7 +6,7 @@ int main()
     data_structure_t *data_structure = (data_structure_t *)malloc(sizeof(data_structure_t)); 
     data_structure_init(data_structure);
     
-    web_array_t *web_array = (web_array_t *)data_structure->return_datatype("array");
+    web_array_t *web_array = (web_array_t *)data_structure->return_datatype(*(G_HTTP_ROUTE));
 
     web_array->create_web_array(web_array, 10);
     data_structure->data = web_array->return_jsondata_to_parent(web_array);

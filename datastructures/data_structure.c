@@ -2,7 +2,7 @@
 
 void *return_datatype(char type[]) 
 {
-    if(0 == strcmp(type, "/c-web/array"))
+    if(0 == strcmp(type, *(G_HTTP_ROUTE)))
     {
         web_array_t* web_array= (web_array_t *)malloc(sizeof(web_array_t));
         web_array_init(web_array);

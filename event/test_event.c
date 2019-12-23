@@ -3,7 +3,7 @@
 int main() {
     printf("Test event module.\n");
     web_event_t *web_event = (web_event_t *)malloc(sizeof(web_event_t));
-    web_event_structure_init(web_event, "/c-web/array");
+    web_event_structure_init(web_event, *(G_HTTP_ROUTE));
     //调用指针之前需要判断指针是否为空。k
     if(NULL != web_event->event_callback_func)
     {
