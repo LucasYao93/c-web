@@ -1,8 +1,9 @@
-#include "http.h"
+#include "test_http.h"
+#include "../event/test_event.h"
 
 int main() {
     printf("Test http module.\n");
-    char message[] = "GET /web HTTP/1.0\r\nHost: localhost:8080\r\nConnection: close\r\nUpgrade-Insecure-Requests: 1\r\n\rbody";
+    char message[] = "GET /array HTTP/1.0\r\nHost: localhost:8080\r\nConnection: close\r\nUpgrade-Insecure-Requests: 1\r\n\rbody";
     http_request_t *http_request = (http_request_t *)malloc(sizeof(http_request_t));
     http_response_t *http_response = (http_response_t *)malloc(sizeof(http_response_t));
     web_event_t *web_event = (web_event_t *)malloc(sizeof(web_event_t));

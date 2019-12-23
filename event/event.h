@@ -1,6 +1,14 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#ifndef _EVENT_H_INCLUDED_
+#define _EVENT_H_INCLUDED_
+
+/*
+#include "test_event.h"
+#include "../datastructures/data_structure.h"
+#include "../datastructures/web_array.h"
+*/
+
+#include "../web_config.h"
+#include "../web_core.h"
 
 typedef struct web_event_s web_event_t;
 
@@ -13,3 +21,5 @@ struct web_event_s {
 
 
 int web_event_structure_init(web_event_t *t, char route[]);
+
+#endif

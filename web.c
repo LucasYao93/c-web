@@ -1,5 +1,4 @@
-#include "web_core.h"
-#include "web_config.h"
+#include "web.h"
 
 int main(int argc, char *argv[]) {
     int fd_server, fd_client, req_number;
@@ -33,23 +32,65 @@ int main(int argc, char *argv[]) {
 	exit(1);
     }	
     printf("Running server on port:%d....\n",PORT);
-    while (1) {
+    while (1) 
+    {
     	fd_client = accept(fd_server, (struct sockaddr *) &client_addr, &sin_len);
-        if(fd_client == -1) {
+        if(fd_client == -1) 
+        {
 	    perror("Connection failed...\n");
 	    continue;
 	    }
-	printf("Client socket fd %d\n", fd_client);
-	memset(buffer, 0, 2048);    
-	read(fd_client, buffer, 2048);
-    	printf("request %dth\n%s\n", ++req_number, buffer);
+        printf("Client socket fd %d\n", fd_client);
+        memset(buffer, 0, 2048);    
+        read(fd_client, buffer, 2048);
+        printf("request %d-th\n%s\n", ++req_number, buffer);
 
-
-    	int n = write(fd_client, webpage, sizeof(webpage)-1);
-    	printf("return write number %d\n", n);
-    	close(fd_client);
+        char *webpage = deal_http_request(buffer)
+        int n = write(fd_client, webpage, 2048);
+        printf("return write number %d\n", n);
+        close(fd_client);
     }
     close(fd_server);
 
     return 0;
+}
+
+char * deal_http_request(char *message)
+{
+    http_request_t *http_request = (http_request_t *)malloc(sizeof(http_request_t));
+    http_response_t *http_response = (http_response_t *)malloc(sizeof(http_response_t));
+    web_event_t *web_event = (web_event_t *)malloc(sizeof(web_event_t));
+
+    //初始化request, response结构体
+    http_request_structure_init(http_request,message);
+    http_response_structure_init(http_response);
+    
+
+
+    http_request->deal_request_message(http_request);
+    http_request->deal_request_row(http_request);
+    
+    printf("route: %s\n", http_request->route);
+    //初始化event结构体，绑定callback function.
+    web_event_structure_init(web_event, http_request->route);
+    //执行callback function.
+    web_event->event_callback_func(web_event);
+    /*
+        3、application/json
+        消息主体是序列化后的 JSON 字符串,这个类型越来越多地被大家所使用
+
+
+        POST [http://www.example.com](http://www.example.com) HTTP/1.1 
+        Content-Type: application/json;charset=utf-8 
+
+        {"title":"test","sub":[1,2,3]}
+    */
+    //生成response
+    http_response->row = "HTTP/1.1 200 OK\r\n";
+    http_response->header = "Content-Type: application/json;charset=UTF-8\r\n\r\n";
+    http_response->body = web_event->data;
+    http_response->combine_reponse_message(http_response);
+    //sizeof(http_response->message)代表指针大小，不是存储数据的大小
+    //printf("%s\n", http_response->message);
+    return http_response->message;
 }

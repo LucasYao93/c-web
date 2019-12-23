@@ -1,4 +1,4 @@
-#include "test_data_st.h"
+#include "test_datast.h"
 
 void *return_datatype(char type[]) 
 {
@@ -17,5 +17,11 @@ int data_structure_init(data_structure_t *t)
     t->data = NULL;
     t->return_datatype = &return_datatype;
     
+    return 0;
+}
+
+int data_structure_destory(data_structure_t *t)
+{
+    free(t->data);
     return 0;
 }

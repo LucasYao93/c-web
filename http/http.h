@@ -1,15 +1,13 @@
-//#include "web_core.h"
-//#include "web_config.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#ifndef _HTTP_H_INCLUDED_
+#define _HTTP_H_INCLUDED_
+
+//#include "test_http.h"
+
+#include "../web_config.h"
+#include "../web_core.h"
 
 #define ROUTE_SIZE 256
 #define RESPONSE_MESSAGE_SIZE 2048
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include "../event/event.h"
 /*typedef为变量重命名*/
 typedef struct http_request_s http_request_t;
 typedef struct http_response_s http_response_t;
@@ -43,3 +41,5 @@ struct http_response_s {
 
 int http_request_structure_init(http_request_t *t, char m[]);
 int http_response_structure_init(http_response_t *t);
+
+#endif

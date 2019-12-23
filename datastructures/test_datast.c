@@ -1,4 +1,4 @@
-#include "test_data_st.h"
+#include "test_datast.h"
 
 int main() 
 {
@@ -18,6 +18,6 @@ int main()
     char stop = getchar();
     free(data_structure);
     free(web_array);
-    printf("stop cmd: %c\n.", stop);
+    printf("stop cmd: %c\n", stop);
     return 0;
 }

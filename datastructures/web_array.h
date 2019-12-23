@@ -4,7 +4,12 @@
 #ifndef _WEB_ARRAY_H_INCLUDED_
 #define _WEB_ARRAY_H_INCLUDED_
 
-#include "test_data_st.h"
+//#include "test_datast.h"
+
+
+#include "../web_config.h"
+#include "../web_core.h"
+
 
 typedef struct web_array_s web_array_t;
 
@@ -23,6 +28,7 @@ struct web_array_s
 };
 
 int web_array_init(web_array_t *t);
+int web_array_destory(web_array_t *t);
 
 #endif
 

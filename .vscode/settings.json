@@ -2,6 +2,7 @@
     "files.associations": {
         "http.h": "c",
         "event.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "test_event.h": "c"
     }
 }
