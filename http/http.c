@@ -104,9 +104,9 @@ static int combine_reponse_message(http_response_t *t, size_t size)
 {
     
     t->message = (char *)malloc(sizeof(char) * size);
-    strcpy(message, t->row);
-    strcat(message, t->header);
-    strcat(message, t->body);
+    strcpy(t->message, t->row);
+    strcat(t->message, t->header);
+    strcat(t->message, t->body);
     //strcat(message, "\0");
 
     return 0;
