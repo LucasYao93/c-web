@@ -7,6 +7,7 @@
 #include "web_core.h"
 
 #define PORT 8080
+/*
 char webpage_test[] =
 "HTTP/1.1 200 OK\r\n"
 "Content-Type: text/html; charset=UTF-8\r\n\r\n"
@@ -14,7 +15,7 @@ char webpage_test[] =
 "<html><head><title>LucasYao</title>\r\n"
 "<style>body {background-color: #FFF000 } </style></head>\r\n"
 "<body><center><h1>Hello,C Web!</h1></center></body>";
-
+*/
 char * deal_http_request(char *message);
 
 #endif
