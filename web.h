@@ -8,6 +8,6 @@
 
 #define PORT 8080
 
-http_response_t *deal_http_request(char *message);
+
 
 #endif

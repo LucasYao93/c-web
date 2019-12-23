@@ -9,7 +9,7 @@ int callback_array_func(web_event_t *t)
 
     web_array->create_web_array(web_array, 10);
     data_structure->data = web_array->return_jsondata_to_parent(web_array);
-    data_structure->data = web_array->data_size;
+    data_structure->data_size = web_array->data_size;
 
     //printf("json data: %s", data_structure->data);
 

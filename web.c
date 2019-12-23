@@ -1,6 +1,8 @@
 #include "web_config.h"
 #include "web_core.h"
 
+http_response_t *deal_http_request(char *message);
+
 int main(int argc, char *argv[]) {
     int fd_server, fd_client, req_number;
     struct sockaddr_in server_addr, client_addr;
