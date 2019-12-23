@@ -1,4 +1,5 @@
-#include "web.h"
+#include "web_config.h"
+#include "web_core.h"
 
 int main(int argc, char *argv[]) {
     int fd_server, fd_client, req_number;
@@ -45,7 +46,7 @@ int main(int argc, char *argv[]) {
         read(fd_client, buffer, 2048);
         printf("request %d-th\n%s\n", ++req_number, buffer);
 
-        char *webpage = deal_http_request(buffer)
+        char *webpage = deal_http_request(buffer);
         int n = write(fd_client, webpage, 2048);
         printf("return write number %d\n", n);
         close(fd_client);
