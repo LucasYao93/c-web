@@ -29,12 +29,16 @@ static char * return_jsondata_to_parent(web_array_t *t)
     char status[] = "{\"status\":\"success\",";
     char data_header[] = "\"data\":[";
     // ((2 * size) - 1) + 1 ==> 2 * size
-    char *data = (char *)malloc((2 * t->size) * sizeof(char));
+    char *data = (char *)malloc((4 * t->size) * sizeof(char));
     char *mv_data = data;
     char data_end[] ="]}";
     while (1)
     {
+        *mv_data = '"';
+        mv_data++;
         *mv_data = *(t->data);
+        mv_data++;
+        *mv_data = '"';
         (t->data)++;
         if( '\0' == *(t->data)){
             mv_data++;
@@ -46,7 +50,7 @@ static char * return_jsondata_to_parent(web_array_t *t)
         mv_data++;
         
     }
-    t->data_size = (sizeof(status) - 1) + (sizeof(data_header) - 1) + ((2 * t->size) - 1) + (sizeof(data_end) - 1);
+    t->data_size = (sizeof(status) - 1) + (sizeof(data_header) - 1) + ((4 * t->size) - 1) + (sizeof(data_end) - 1);
     char *jsondata = (char *)malloc(((t->data_size) + 1) * sizeof(char));
     
     strcpy(jsondata,status);

@@ -103,7 +103,7 @@ static int deal_request_row(http_request_t *t) {
 static int combine_reponse_message(http_response_t *t) 
 {
     
-    t->message = (char *)malloc(((http_response->message_size) + 1) * sizeof(char));
+    t->message = (char *)malloc(((t->message_size) + 1) * sizeof(char));
     strcpy(t->message, t->row);
     strcat(t->message, t->header);
     strcat(t->message, t->body);
