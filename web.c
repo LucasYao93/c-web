@@ -79,28 +79,31 @@ http_response_t *deal_http_request(char *message)
     //初始化event结构体，绑定callback function.
     web_event_structure_init(web_event, http_request->route);
     //执行callback function.
-    web_event->event_callback_func(web_event);
-    /*
-        3、application/json
-        消息主体是序列化后的 JSON 字符串,这个类型越来越多地被大家所使用
+    if( NULL != web_event->event_callback_func)
+    {
+        web_event->event_callback_func(web_event);
+        /*
+            3、application/json
+            消息主体是序列化后的 JSON 字符串,这个类型越来越多地被大家所使用
 
 
-        POST [http://www.example.com](http://www.example.com) HTTP/1.1 
-        Content-Type: application/json;charset=utf-8 
+            POST [http://www.example.com](http://www.example.com) HTTP/1.1 
+            Content-Type: application/json;charset=utf-8 
 
-        {"title":"test","sub":[1,2,3]}
-    */
-    //生成response
-    char row[] = "HTTP/1.1 200 OK\r\n";
-    char header[] = "Content-Type: application/json;charset=UTF-8\r\n\r\n";
-    http_response->row = row;
-    http_response->header = header;
-    http_response->body = web_event->data;
-    //issue:web_event->data_size error
-    http_response->message_size = (sizeof(row)-1) + (sizeof(header) - 1) + web_event->data_size;
-    http_response->combine_reponse_message(http_response);
-    //sizeof(http_response->message)代表指针大小，不是存储数据的大小
-    //printf("%s\n", http_response->message);
+            {"title":"test","sub":[1,2,3]}
+        */
+        //生成response
+        char row[] = "HTTP/1.1 200 OK\r\n";
+        char header[] = "Content-Type: application/json;charset=UTF-8\r\n\r\n";
+        http_response->row = row;
+        http_response->header = header;
+        http_response->body = web_event->data;
+        //Socket write buffer size not include '\0'.
+        http_response->message_size = (sizeof(row)-1) + (sizeof(header) - 1) + web_event->data_size;
+        http_response->combine_reponse_message(http_response);
+        //sizeof(http_response->message)代表指针大小，不是存储数据的大小
+    }
+    
     free(http_request);
     free(web_event);
     return http_response;
