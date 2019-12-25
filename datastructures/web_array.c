@@ -9,13 +9,11 @@ static int create_web_array(web_array_t *t,size_t size)
     当多个指针指向同一个内存块时，释放任意一个，其他都指针都不可用。
     移动指针，再释放时，会引起报错。
    */
-    char *array = (char *)malloc(size * sizeof(char));
-    //size_t *size_pt = (size_t *)malloc(size * sizeof(size_t));
-    //*size_pt = size + 1;
+    t->size = size;
+    char *array = (char *)malloc((size + 1) * sizeof(char));
     t->data = array;
-    t->size = size + 1;
     int n =0;
-    for(int i=1; i < t->size; i++)
+    for(int i=0; i < size; i++)
     {
         n = rand() % 26;
         *array = (char)(n+65);
@@ -30,7 +28,8 @@ static char * return_jsondata_to_parent(web_array_t *t)
 {
     char status[] = "{\"status\":\"success\",";
     char data_header[] = "\"data\":[";
-    char *data = (char *)malloc(((2 * t->size)) * sizeof(char));
+    // ((2 * size) - 1) + 1 ==> 2 * size
+    char *data = (char *)malloc((2 * t->size) * sizeof(char));
     char *mv_data = data;
     char data_end[] ="]}";
     while (1)
@@ -38,6 +37,8 @@ static char * return_jsondata_to_parent(web_array_t *t)
         *mv_data = *(t->data);
         (t->data)++;
         if( '\0' == *(t->data)){
+            mv_data++;
+            *mv_data = '\0';
             break;
         }
         mv_data++;
@@ -45,15 +46,15 @@ static char * return_jsondata_to_parent(web_array_t *t)
         mv_data++;
         
     }
-    mv_data++;
-    *mv_data = '\0';
-    char *jsondata = (char *)malloc(sizeof(status) + sizeof(data_header) + ((2 * t->size)) * sizeof(char) + sizeof(data_end));
-    t->data_size = sizeof(status) + sizeof(data_header) + (2 * t->size) + sizeof(data_end);
+    t->data_size = (sizeof(status) - 1) + (sizeof(data_header) - 1) + ((2 * t->size) - 1) + (sizeof(data_end) - 1);
+    char *jsondata = (char *)malloc(((t->data_size) + 1) * sizeof(char));
     
     strcpy(jsondata,status);
     strcat(jsondata,data_header);
     strcat(jsondata,data);
     strcat(jsondata,data_end);
+
+    
     free(data);
     //free(jsondata);
     return jsondata;

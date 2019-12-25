@@ -15,7 +15,7 @@ typedef struct http_response_s http_response_t;
 /*函数指针*/
 typedef int (*deal_request_message_pt)(http_request_t *r);
 typedef int (*deal_request_row_pt)(http_request_t *t);
-typedef int (*combine_reponsd_message_pt)(http_response_t *t, size_t size);
+typedef int (*combine_reponsd_message_pt)(http_response_t *t);
 
 extern char *G_HTTP_ROUTE[];
 
